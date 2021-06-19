@@ -5,6 +5,7 @@ author 'CritteR / CritteRo'
 description 'Some sort of menu, idk.'
 
 client_scripts {
-    'client/cl_menu_scalefornm.lua',
+    'client/cl_menu_scaleform.lua',
     'client/cl_menu_handle.lua',
+    'client/cl_menu_example.lua',
 }
