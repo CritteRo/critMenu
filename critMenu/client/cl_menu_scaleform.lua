@@ -226,10 +226,10 @@ end)
 TriggerEvent('chat:removeSuggestion', '/menutriggeritem')
 
 
-RegisterKeyMapping('critmenumovemenuitemdown', 'Menu Down', 'keyboard', 'l')
-RegisterKeyMapping('critmenumovemenuitemup', 'Menu Up', 'keyboard', 'p')
-RegisterKeyMapping('critmenuclosemenu', 'Close Menu', 'keyboard', 'e')
-RegisterKeyMapping('critmenutriggeritem', 'Menu Use Item', 'keyboard', 'escape')
+RegisterKeyMapping('critmenumovemenuitemdown', 'Menu Down', 'keyboard', 'DOWN')
+RegisterKeyMapping('critmenumovemenuitemup', 'Menu Up', 'keyboard', 'UP')
+RegisterKeyMapping('critmenuclosemenu', 'Close Menu', 'keyboard', 'BACK')
+RegisterKeyMapping('critmenutriggeritem', 'Menu Use Item', 'keyboard', 'RETURN')
 
 --[[----------------------------------------------------------------------------------]]--
 
