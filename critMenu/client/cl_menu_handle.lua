@@ -59,8 +59,37 @@ AddEventHandler('critMenu.ModifyButton', function(_menuID, _buttonID, _buttonTex
             menu[_menuID].buttons[btnid] = {
                 text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonEventHandler, id = _buttonID
             }
+            generateMenu(menuShown, buttonID)
         else
             print('--==[[WARNING:: THE BUTTON-ID YOU TRIED TO MODIFY DOES NOT EXIST ]]==--')
+        end
+    else
+        print('--==[[WARNING:: YOU TRIED TO MODIFY A BUTTON TO A NON-EXISTENT MENU-ID ]]==--')
+    end
+end)
+
+AddEventHandler('critMenu.RemoveButton', function(_menuID, _buttonID)
+    local foundit = nil
+    local newbuttons = {}
+    if menu[_menuID] ~= nil then
+        for k, v in ipairs(menu[_menuID].buttons) do
+            if menu[_menuID].buttons[k].id == _buttonID then
+                foundit = 1
+                --do nothing
+            else
+                newbuttons[#newbuttons + 1] = menu[_menuID].buttons[k]
+                print(newbuttons[#newbuttons].text)
+            end
+        end
+        menu[_menuID].buttons = newbuttons
+        local btnid = buttonID
+        generateMenu("critmenu:internalmenu:cleanmenu:donotuse", 1)
+        buttonID = 2
+        generateMenu(menuShown, buttonID)
+        if foundit ~= nil then
+            --do nothing..for now
+        else
+            print('--==[[WARNING:: THE BUTTON-ID YOU TRIED TO REMOVE DOES NOT EXIST ]]==--')
         end
     else
         print('--==[[WARNING:: YOU TRIED TO MODIFY A BUTTON TO A NON-EXISTENT MENU-ID ]]==--')

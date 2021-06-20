@@ -14,3 +14,18 @@ AddEventHandler('test.event', function(_menu, _button)
     TriggerEvent('critMenu.HideMenu')
     print('button ['.._button..'] from menu ['.._menu..'] triggered this event')
 end)
+
+RegisterCommand('modif', function(source, args)
+    local btn = tostring(args[1])
+    if btn ~= nil then
+        TriggerEvent('critMenu.ModifyButton', "test1", btn, "_modified", "_modified", "", "_modified _modified _modified _modified _modified _modified _modified", "test.event")
+    end
+end)
+
+RegisterCommand('remove', function(source, args)
+    local btn = tostring(args[1])
+    if btn ~= nil then
+        TriggerEvent('critMenu.RemoveButton', "test1", btn)
+    end
+end)
+

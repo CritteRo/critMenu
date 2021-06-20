@@ -166,12 +166,16 @@ function generateMenu(_menuID, activeButton)
 end
 
 function getMenuItemRange(_itemID) --this is some weird way I get the range of items that the menu should load at any time.
-    if _itemID > menuMax then
-        menuMin = menuMax
-        menuMax = menuMin + 10
-    elseif _itemID < menuMin then
-        menuMax = menuMin
-        menuMin = menuMax - 10
+    menuMin = 2
+    menuMax = menuMin + 10
+    while _itemID > menuMax or _itemID < menuMin do
+        if _itemID > menuMax then
+            menuMin = menuMax
+            menuMax = menuMin + 10
+        elseif _itemID < menuMin then
+            menuMax = menuMin
+            menuMin = menuMax - 10
+        end
     end
 end
 
