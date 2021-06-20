@@ -13,10 +13,10 @@ AddEventHandler('critMenu.CreateMenu', function(_menuID, _menuTitle, _menuDesc, 
     }
 end)
 
-AddEventHandler('critMenu.AddButton', function(_menuID, _buttonTriggerId, _buttonText, _buttonRightText, _buttonStrikeThroughText, _buttonDescription, _buttonEventHandler)
+AddEventHandler('critMenu.AddButton', function(_menuID, _buttonID, _buttonText, _buttonRightText, _buttonStrikeThroughText, _buttonDescription, _buttonEventHandler)
     if menu[_menuID] ~= nil then
         menu[_menuID].buttons[#menu[_menuID].buttons + 1] = {
-            text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonEventHandler, id = _buttonTriggerId
+            text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonEventHandler, id = _buttonID
         }
     else
         print('--==[[WARNING:: YOU TRIED TO ADD A BUTTON TO A NON-EXISTENT MENU-ID ]]==--')
