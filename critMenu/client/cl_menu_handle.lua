@@ -3,6 +3,23 @@ print('critMenu loaded.')
 AddEventHandler('critMenu.CreateMenu', function(_menuID, _menuTitle, _menuDesc, _selectText, _upText, _downText, _quitText)
     menu[_menuID] = {
         title = _menuTitle,
+        isSubmenu = false,
+        menuParent = '',
+        buttons = {
+            [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = ""},
+        },
+        selectText = _selectText,
+        upText = _upText,
+        downText = _downText,
+        quitText = _quitText,
+    }
+end)
+
+AddEventHandler('critMenu.CreateSubMenu', function(_menuID, _parentID, _menuTitle, _menuDesc, _selectText, _upText, _downText, _quitText)
+    menu[_menuID] = {
+        title = _menuTitle,
+        isSubmenu = true,
+        menuParent = _parentID,
         buttons = {
             [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = ""},
         },
@@ -38,13 +55,26 @@ AddEventHandler('critMenu.ShowMenu', function(_menuID)
 end)
 
 AddEventHandler('critMenu.HideMenu', function()
-    TriggerEvent('critMenu.Check.MenuWasClosed', menuShown)
-    renderMenu = false
-    menuShown = 0
-    instrucitonId = SetScaleformMovieAsNoLongerNeeded()
-    buttonID = 0
-    generateMenu("critmenu:internalmenu:cleanmenu:donotuse", 1)
-    scaleformId = SetScaleformMovieAsNoLongerNeeded()
+    if menu[menuShown].isSubmenu == false then
+        TriggerEvent('critMenu.Check.MenuWasClosed', menuShown)
+        renderMenu = false
+        menuShown = 0
+        instrucitonId = SetScaleformMovieAsNoLongerNeeded()
+        buttonID = 0
+        generateMenu("critmenu:internalmenu:cleanmenu:donotuse", 1)
+        scaleformId = SetScaleformMovieAsNoLongerNeeded()
+    else
+        local parent = menu[menuShown].menuParent
+        if menu[parent] ~= nil then
+            --TriggerEvent('critMenu.Check.MenuWasClosed', menuShown)
+            menuShown = parent
+            instrucitonId = generateInstruction(menuShown)
+            buttonID = 2
+            scaleformId = generateMenu(menuShown, buttonID)
+        else
+            print('--==[[WARNING:: YOU TRIED TO SHOW A NON-EXISTENT PARENT MENU-ID ]]==--')
+        end
+    end
 end)
 
 AddEventHandler('critMenu.ModifyButton', function(_menuID, _buttonID, _buttonText, _buttonRightText, _buttonStrikeThroughText, _buttonDescription, _buttonEventHandler)

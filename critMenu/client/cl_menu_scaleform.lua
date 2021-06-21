@@ -4,21 +4,10 @@ instrucitonId  = 0
 menu = {
     ["critmenu:internalmenu:cleanmenu:donotuse"] = {
         title = "changeme",
+        isSubmenu = false,
+        menuParent = '',
         buttons = {
             [1] = {text = "changeme", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test"},
-        },
-        selectText = "Select",
-        upText = "Up",
-        downText = "Down",
-        quitText = "Close Menu",
-    },
-    ["critmenu:test"] = {
-        title = "changeme",
-        buttons = {
-            [1] = {text = "changeme", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test"},
-            [2] = {text = "changeme1", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test1"},
-            [3] = {text = "changem2e", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test2"},
-            [4] = {text = "changeme3", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test3"},
         },
         selectText = "Select",
         upText = "Up",
