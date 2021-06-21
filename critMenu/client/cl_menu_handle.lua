@@ -70,6 +70,22 @@ AddEventHandler('critMenu.ModifyButton', function(_menuID, _buttonID, _buttonTex
     end
 end)
 
+AddEventHandler('critMenu.ModifyEmptyMenuDescription', function(_menuID, _newDescription)
+    if menu[_menuID] ~= nil then
+        if #menu[_menuID].buttons > 1 then
+            print('--==[[WARNING:: MENU-ID IS NOT EMPTY. DESCRIPTION WILL NOT SHOW UNLESS YOU REMOVE THE BUTTONS FROM SCRIPT OR USING THE EVENT ]]==--')
+        end
+        if btnid ~= nil then
+            menu[_menuID].buttons[1].desc = _newDescription)
+            generateMenu(menuShown, buttonID)
+        else
+            print('--==[[WARNING:: THE BUTTON-ID YOU TRIED TO MODIFY DOES NOT EXIST ]]==--')
+        end
+    else
+        print('--==[[WARNING:: YOU TRIED TO MODIFY A DESCRIPTION TO A NON-EXISTENT MENU-ID ]]==--')
+    end
+end)
+
 AddEventHandler('critMenu.RemoveButton', function(_menuID, _buttonID)
     local foundit = nil
     local newbuttons = {}
