@@ -66,7 +66,7 @@ AddEventHandler('critMenu.HideMenu', function()
     else
         local parent = menu[menuShown].menuParent
         if menu[parent] ~= nil then
-            --TriggerEvent('critMenu.Check.MenuWasClosed', menuShown)
+            TriggerEvent('critMenu.Check.MenuWasClosed', menuShown)
             generateMenu("critmenu:internalmenu:cleanmenu:donotuse", 1) --needed to reset the scene
             menuShown = parent
             instrucitonId = generateInstruction(menuShown)
