@@ -31,12 +31,14 @@ AddEventHandler('critMenu.ShowMenu', function(_menuID)
         scaleformId = generateMenu(menuShown, buttonID)
         instrucitonId = generateInstruction(menuShown)
         renderMenu = true
+        TriggerEvent('critMenu.Check.MenuWasOpened', _menuID)
     else
         print('--==[[WARNING:: YOU TRIED TO SHOW A NON-EXISTENT MENU-ID ]]==--')
     end
 end)
 
 AddEventHandler('critMenu.HideMenu', function()
+    TriggerEvent('critMenu.Check.MenuWasClosed', menuShown)
     renderMenu = false
     menuShown = 0
     instrucitonId = SetScaleformMovieAsNoLongerNeeded()
