@@ -54,28 +54,32 @@ function generateInstruction(_menuID) --from Vespura's no-clip script.
     PushScaleformMovieFunctionParameterInt(200)
     PopScaleformMovieFunctionVoid()
 
-    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(4)
-    ScaleformMovieMethodAddParamPlayerNameString("~INPUT_EDD5F444~")
-    ButtonMessage(menu[_menuID].selectText)
-    PopScaleformMovieFunctionVoid()
+    if #menu[_menuID].buttons > 1 then
+        PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
+        PushScaleformMovieFunctionParameterInt(4)
+        ScaleformMovieMethodAddParamPlayerNameString("~INPUT_EDD5F444~")
+        ButtonMessage(menu[_menuID].selectText)
+        PopScaleformMovieFunctionVoid()
+    
+        if #menu[_menuID].buttons > 2 then
+            PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
+            PushScaleformMovieFunctionParameterInt(2)
+            ScaleformMovieMethodAddParamPlayerNameString("~INPUT_95AAEE79~")
+            ButtonMessage(menu[_menuID].upText)
+            PopScaleformMovieFunctionVoid()
+        
+            PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
+            PushScaleformMovieFunctionParameterInt(1)
+            ScaleformMovieMethodAddParamPlayerNameString("~INPUT_E7DCE59F~")
+            ButtonMessage(menu[_menuID].downText)
+            PopScaleformMovieFunctionVoid()
+        end
+    end
 
     PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
     PushScaleformMovieFunctionParameterInt(3)
     ScaleformMovieMethodAddParamPlayerNameString("~INPUT_FCF788AA~")
     ButtonMessage(menu[_menuID].quitText)
-    PopScaleformMovieFunctionVoid()
-
-    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(2)
-    ScaleformMovieMethodAddParamPlayerNameString("~INPUT_95AAEE79~")
-    ButtonMessage(menu[_menuID].upText)
-    PopScaleformMovieFunctionVoid()
-
-    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(1)
-    ScaleformMovieMethodAddParamPlayerNameString("~INPUT_E7DCE59F~")
-    ButtonMessage(menu[_menuID].downText)
     PopScaleformMovieFunctionVoid()
 
     PushScaleformMovieFunction(scaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
