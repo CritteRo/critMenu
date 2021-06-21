@@ -76,7 +76,7 @@ AddEventHandler('critMenu.ModifyEmptyMenuDescription', function(_menuID, _newDes
             print('--==[[WARNING:: MENU-ID IS NOT EMPTY. DESCRIPTION WILL NOT SHOW UNLESS YOU REMOVE THE BUTTONS FROM SCRIPT OR USING THE EVENT ]]==--')
         end
         if btnid ~= nil then
-            menu[_menuID].buttons[1].desc = _newDescription)
+            menu[_menuID].buttons[1].desc = _newDescription
             generateMenu(menuShown, buttonID)
         else
             print('--==[[WARNING:: THE BUTTON-ID YOU TRIED TO MODIFY DOES NOT EXIST ]]==--')

@@ -63,13 +63,13 @@ function generateInstruction(_menuID) --from Vespura's no-clip script.
     
         if #menu[_menuID].buttons > 2 then
             PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-            PushScaleformMovieFunctionParameterInt(2)
+            PushScaleformMovieFunctionParameterInt(3)
             ScaleformMovieMethodAddParamPlayerNameString("~INPUT_95AAEE79~")
             ButtonMessage(menu[_menuID].upText)
             PopScaleformMovieFunctionVoid()
         
             PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-            PushScaleformMovieFunctionParameterInt(1)
+            PushScaleformMovieFunctionParameterInt(2)
             ScaleformMovieMethodAddParamPlayerNameString("~INPUT_E7DCE59F~")
             ButtonMessage(menu[_menuID].downText)
             PopScaleformMovieFunctionVoid()
@@ -77,7 +77,7 @@ function generateInstruction(_menuID) --from Vespura's no-clip script.
     end
 
     PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(3)
+    PushScaleformMovieFunctionParameterInt(1)
     ScaleformMovieMethodAddParamPlayerNameString("~INPUT_FCF788AA~")
     ButtonMessage(menu[_menuID].quitText)
     PopScaleformMovieFunctionVoid()
