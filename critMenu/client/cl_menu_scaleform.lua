@@ -185,8 +185,6 @@ RegisterCommand('critmenumovemenuitemdown', function()
     PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET")
     scaleformId = generateMenu(menuShown, buttonID)
 end)
-TriggerEvent('chat:removeSuggestion', '/movemenuitemdown')
-
 
 RegisterCommand('critmenumovemenuitemup', function()
     if buttonID <= 2 then
@@ -199,8 +197,6 @@ RegisterCommand('critmenumovemenuitemup', function()
     PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET")
     scaleformId = generateMenu(menuShown, buttonID)
 end)
-TriggerEvent('chat:removeSuggestion', '/movemenuitemup')
-
 
 RegisterCommand('critmenuclosemenu', function()
     if renderMenu then
@@ -208,7 +204,6 @@ RegisterCommand('critmenuclosemenu', function()
         PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
     end
 end)
-TriggerEvent('chat:removeSuggestion', '/menuclosemenu')
 
 RegisterCommand('critmenutriggeritem', function()
     if renderMenu then
@@ -216,8 +211,14 @@ RegisterCommand('critmenutriggeritem', function()
         TriggerEvent(menu[menuShown].buttons[buttonID].event, menuShown, menu[menuShown].buttons[buttonID].id)
     end
 end)
-TriggerEvent('chat:removeSuggestion', '/menutriggeritem')
 
+Citizen.CreateThread(function()
+    Citizen.Wait(100)
+    TriggerEvent('chat:removeSuggestion', '/critmenumovemenuitemdown')
+    TriggerEvent('chat:removeSuggestion', '/critmenumovemenuitemup')
+    TriggerEvent('chat:removeSuggestion', '/critmenuclosemenu')
+    TriggerEvent('chat:removeSuggestion', '/critmenutriggeritem')
+end)
 
 RegisterKeyMapping('critmenumovemenuitemdown', 'Menu Down', 'keyboard', 'DOWN')
 RegisterKeyMapping('critmenumovemenuitemup', 'Menu Up', 'keyboard', 'UP')
