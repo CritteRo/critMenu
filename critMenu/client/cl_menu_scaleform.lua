@@ -1,6 +1,6 @@
 scaleformId = 0
 instrucitonId  = 0
-
+credits = "Thank you for choosing ~y~critMenu~s~!\ncritMenu is an event-based scaleform menu framework, created on top of the ORBITAL_CANNON_CAM scaleform.\n\nShoutout to:\n >CritteR / CritteRo :: framework creation\n >Vespura :: Scaleforms research"
 menu = {
     ["critmenu:internalmenu:cleanmenu:donotuse"] = {
         title = "changeme",
@@ -13,6 +13,18 @@ menu = {
         upText = "Up",
         downText = "Down",
         quitText = "Close Menu",
+    },
+    ["critmenu:internalmenu:credits"] = {
+        title = "critMenu - A scaleform menu framework",
+        isSubmenu = false,
+        menuParent = '',
+        buttons = {
+            [1] = {text = "About", helptext = "", strike = "", desc = credits, event = "critMenu.HideMenu", id = "credits"},
+        },
+        selectText = "Select",
+        upText = "Up",
+        downText = "Down",
+        quitText = "Close",
     },
 }
 
