@@ -220,6 +220,7 @@ end)
 RegisterCommand('critmenutriggeritem', function()
     if renderMenu then
         PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+        TriggerEvent('critMenu.Check.ButtonWasUsed', menuShown, buttonID)
         if menu[menuShown].buttons[buttonID].isMenu == true then
             local newMenu = menu[menuShown].buttons[buttonID].event
             TriggerEvent('critMenu.HideMenu')
