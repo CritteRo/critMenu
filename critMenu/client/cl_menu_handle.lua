@@ -6,7 +6,7 @@ AddEventHandler('critMenu.CreateMenu', function(_menuID, _menuTitle, _menuDesc, 
         isSubmenu = false,
         menuParent = '',
         buttons = {
-            [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = ""},
+            [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = "", isMenu = false},
         },
         selectText = _selectText,
         upText = _upText,
@@ -21,7 +21,7 @@ AddEventHandler('critMenu.CreateSubMenu', function(_menuID, _parentID, _menuTitl
         isSubmenu = true,
         menuParent = _parentID,
         buttons = {
-            [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = ""},
+            [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = "", isMenu = false},
         },
         selectText = _selectText,
         upText = _upText,
@@ -46,10 +46,20 @@ end)
 AddEventHandler('critMenu.AddButton', function(_menuID, _buttonID, _buttonText, _buttonRightText, _buttonStrikeThroughText, _buttonDescription, _buttonEventHandler)
     if menu[_menuID] ~= nil then
         menu[_menuID].buttons[#menu[_menuID].buttons + 1] = {
-            text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonEventHandler, id = _buttonID
+            text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonEventHandler, id = _buttonID, isMenu = false
         }
     else
         print('--==[[WARNING:: YOU TRIED TO ADD A BUTTON TO A NON-EXISTENT MENU-ID ]]==--')
+    end
+end)
+
+AddEventHandler('critMenu.AddMenuButton', function(_menuID, _buttonID, _buttonText, _buttonRightText, _buttonStrikeThroughText, _buttonDescription, _buttonMenuTrigger)
+    if menu[_menuID] ~= nil then
+        menu[_menuID].buttons[#menu[_menuID].buttons + 1] = {
+            text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonMenuTrigger, id = _buttonID, isMenu = true
+        }
+    else
+        print('--==[[WARNING:: YOU TRIED TO ADD A MENU BUTTON TO A NON-EXISTENT MENU-ID ]]==--')
     end
 end)
 
@@ -103,7 +113,7 @@ AddEventHandler('critMenu.ModifyButton', function(_menuID, _buttonID, _buttonTex
         end
         if btnid ~= nil then
             menu[_menuID].buttons[btnid] = {
-                text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonEventHandler, id = _buttonID
+                text = _buttonText, helptext = _buttonRightText, strike = _buttonStrikeThroughText, desc = _buttonDescription, event = _buttonEventHandler, id = _buttonID, isMenu = false
             }
             generateMenu(menuShown, buttonID)
         else

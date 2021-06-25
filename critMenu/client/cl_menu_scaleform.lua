@@ -7,7 +7,7 @@ menu = {
         isSubmenu = false,
         menuParent = '',
         buttons = {
-            [1] = {text = "changeme", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test"},
+            [1] = {text = "changeme", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test", isMenu = false},
         },
         selectText = "Select",
         upText = "Up",
@@ -19,7 +19,7 @@ menu = {
         isSubmenu = false,
         menuParent = '',
         buttons = {
-            [1] = {text = "About", helptext = "", strike = "", desc = credits, event = "critMenu.HideMenu", id = "credits"},
+            [1] = {text = "About", helptext = "", strike = "", desc = credits, event = "critMenu.HideMenu", id = "credits", isMenu = false},
         },
         selectText = "Select",
         upText = "Up",
@@ -220,7 +220,13 @@ end)
 RegisterCommand('critmenutriggeritem', function()
     if renderMenu then
         PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
-        TriggerEvent(menu[menuShown].buttons[buttonID].event, menuShown, menu[menuShown].buttons[buttonID].id)
+        if menu[menuShown].buttons[buttonID].isMenu == true then
+            local newMenu = menu[menuShown].buttons[buttonID].event
+            TriggerEvent('critMenu.HideMenu')
+            TriggerEvent('critMenu.ShowMenu', newMenu)
+        else
+            TriggerEvent(menu[menuShown].buttons[buttonID].event, menuShown, menu[menuShown].buttons[buttonID].id)
+        end
     end
 end)
 
