@@ -34,10 +34,10 @@ AddEventHandler('critMenu.ModifyMenu', function(_menuID, _menuTitle, _menuSubtit
     if menu[_menuID] ~= nil then
         menu[_menuID].title = _menuTitle
         menu[_menuID].buttons[1].text = _menuSubtitle
-        menu[_menuID].selectText = _selectText,
-        menu[_menuID].upText = _upText,
-        menu[_menuID].downText = _downText,
-        menu[_menuID].quitText = _quitText,
+        menu[_menuID].selectText = _selectText
+        menu[_menuID].upText = _upText
+        menu[_menuID].downText = _downText
+        menu[_menuID].quitText = _quitText
     else
         print('--==[[WARNING:: YOU TRIED TO MODIFY A NON-EXISTENT MENU-ID ]]==--')
     end
