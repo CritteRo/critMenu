@@ -1,6 +1,6 @@
 --[[ :: WORK IN PROGRESS :: ]]--
 
---[[tosId = nil
+tosId = nil
 
 tostitle = "Terms of Service and End-User Licence Agreement"
 tostext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mollis tellus quis nisl consectetur, eu vehicula risus scelerisque. Aliquam congue, nulla et mollis malesuada, justo risus sodales sapien, at viverra odio massa at dui. Nam orci massa, mollis ut leo nec, tristique congue sapien. Curabitur tempus accumsan magna, at elementum dui varius sit amet. Duis viverra ullamcorper sapien a vehicula. Vivamus gravida euismod ullamcorper. Morbi et mollis mauris, id facilisis quam. Proin at justo at lorem laoreet pellentesque. Vestibulum finibus urna quis orci tincidunt, in pretium arcu porttitor. In porttitor varius arcu at lobortis. Fusce in dictum arcu."
@@ -9,7 +9,7 @@ tostext3 = "Nulla dignissim at nibh in egestas. Nunc congue lectus ac arcu trist
 tostext4 = "In vel placerat enim. Donec at ornare massa. Nulla maximus mauris lorem, egestas luctus eros vulputate quis. Aenean imperdiet ipsum dolor, id maximus arcu ornare in. Nam id dignissim est. Nunc venenatis aliquet libero quis elementum. Proin malesuada fermentum mauris eget ultrices. Phasellus elementum lorem nisl, et lacinia ex porttitor in. Ut fringilla tristique aliquam. Maecenas porttitor nibh ante, eget luctus leo ullamcorper sed."
 
 
-function generateTos()
+function generateTos(menuID)
     local scaleform = RequestScaleformMovie("ONLINE_POLICIES")
     while not HasScaleformMovieLoaded(scaleform) do
         Citizen.Wait(0)
@@ -19,25 +19,25 @@ function generateTos()
     EndScaleformMovieMethod()
 
     BeginScaleformMovieMethod(scaleform, "INIT_BUTTONS")
-    PushScaleformMovieMethodParameterString("test")
+    PushScaleformMovieMethodParameterString("")
     EndScaleformMovieMethod()
 
     BeginScaleformMovieMethod(scaleform, "SET_POLICY_TITLE")
-    PushScaleformMovieMethodParameterString(tostitle)
+    PushScaleformMovieMethodParameterString(menu[menuShown].title)
     PushScaleformMovieMethodParameterBool(true)
     EndScaleformMovieMethod()
 
     BeginScaleformMovieMethod(scaleform, "SET_POLICY_INTRO")
-    PushScaleformMovieMethodParameterString("Policy intro")
+    PushScaleformMovieMethodParameterString("")
     PushScaleformMovieMethodParameterBool(true)
     EndScaleformMovieMethod()
 
     BeginScaleformMovieMethod(scaleform, "SET_POLICY_TEXT")
-    PushScaleformMovieMethodParameterString(tostext.."\n\n"..tostext2.."\n\n~y~"..tostext3.."~s~\n\n"..tostext4.."\n\n~y~"..tostext3)
+    PushScaleformMovieMethodParameterString(menu[menuShown].buttons[1].text)
     EndScaleformMovieMethod()
 
     BeginScaleformMovieMethod(scaleform, "SET_POLICY_ACCEPTED_TEXT")
-    PushScaleformMovieMethodParameterString("Accepted")
+    PushScaleformMovieMethodParameterString(menu[menuShown].buttons[1].helptext)
     PushScaleformMovieMethodParameterBool(true)
     EndScaleformMovieMethod()
 
@@ -45,23 +45,5 @@ function generateTos()
     PushScaleformMovieMethodParameterInt(0)
     EndScaleformMovieMethod()
 
-
-    
-
     return scaleform
 end
-
-RegisterCommand('tos', function()
-    tosId = generateRP()
-    renderTos = true
-end)
-
-Citizen.CreateThread(function() --main loop. Renders the scaleforms we need to. Otherwise we wait 1000ms
-    while true do
-        if renderTos == true then
-            DrawScaleformMovieFullscreen(tosId, 255, 255, 255, 255)
-            SetMouseCursorActiveThisFrame()
-        end
-        Citizen.Wait(1)
-    end
-end)]]

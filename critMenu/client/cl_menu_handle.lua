@@ -4,6 +4,7 @@ AddEventHandler('critMenu.CreateMenu', function(_menuID, _menuTitle, _menuDesc, 
     menu[_menuID] = {
         title = _menuTitle,
         isSubmenu = false,
+        isTOS = false,
         menuParent = '',
         buttons = {
             [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = "", isMenu = false},
@@ -19,6 +20,7 @@ AddEventHandler('critMenu.CreateSubMenu', function(_menuID, _parentID, _menuTitl
     menu[_menuID] = {
         title = _menuTitle,
         isSubmenu = true,
+        isTOS = false,
         menuParent = _parentID,
         buttons = {
             [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = "", isMenu = false},
@@ -26,6 +28,22 @@ AddEventHandler('critMenu.CreateSubMenu', function(_menuID, _parentID, _menuTitl
         selectText = _selectText,
         upText = _upText,
         downText = _downText,
+        quitText = _quitText,
+    }
+end)
+
+AddEventHandler('critMenu.CreateTosMenu', function(_menuID, _menuTitle, _menuDesc, _selectText, _quitText)
+    menu[_menuID] = {
+        title = _menuTitle,
+        isSubmenu = false,
+        isTOS = true,
+        menuParent = '',
+        buttons = {
+            [1] = {text = _menuDesc, helptext = "", strike = "", desc = "You don't have any buttons set up.", event = "", isMenu = false, id = "critmenu:internalid:tos"},
+        },
+        selectText = _selectText,
+        upText = "",
+        downText = "",
         quitText = _quitText,
     }
 end)

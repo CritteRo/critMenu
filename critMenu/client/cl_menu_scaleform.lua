@@ -5,6 +5,7 @@ menu = {
     ["critmenu:internalmenu:cleanmenu:donotuse"] = {
         title = "changeme",
         isSubmenu = false,
+        isTOS = false,
         menuParent = '',
         buttons = {
             [1] = {text = "changeme", helptext = "", strike = "", desc = "This should never show", event = "critMenu.HideMenu", id = "test", isMenu = false},
@@ -17,6 +18,7 @@ menu = {
     ["critmenu:internalmenu:credits"] = {
         title = "critMenu - A scaleform menu framework",
         isSubmenu = false,
+        isTOS = false,
         menuParent = '',
         buttons = {
             [1] = {text = "About", helptext = "", strike = "", desc = credits, event = "critMenu.HideMenu", id = "credits", isMenu = false},
@@ -55,7 +57,7 @@ function generateInstruction(_menuID) --from Vespura's no-clip script.
     PushScaleformMovieFunctionParameterInt(200)
     PopScaleformMovieFunctionVoid()
 
-    if #menu[_menuID].buttons > 1 then
+    if #menu[_menuID].buttons > 1 or menu[_menuID].isTOS then
         PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
         PushScaleformMovieFunctionParameterInt(4)
         ScaleformMovieMethodAddParamPlayerNameString("~INPUT_EDD5F444~")
@@ -96,7 +98,7 @@ function generateInstruction(_menuID) --from Vespura's no-clip script.
     return scaleform
 end
 
-function generateMenu(_menuID, activeButton)
+function generateOrbital(_menuID, activeButton)
     local scaleform = RequestScaleformMovie("ORBITAL_CANNON_CAM")
     while not HasScaleformMovieLoaded(scaleform) do
         Citizen.Wait(0)
@@ -170,6 +172,17 @@ function generateMenu(_menuID, activeButton)
     return scaleform
 end
 
+function generateMenu(_menuID, _buttonID)
+    local id = nil
+    if menu[_menuID].isTOS == false then
+        id = generateOrbital(_menuID, _buttonID)
+    elseif menu[_menuID].isTOS == true then
+        id = generateTos(_menuID)
+    end
+
+    return id
+end
+
 function getMenuItemRange(_itemID) --this is some weird way I get the range of items that the menu should load at any time.
     menuMin = 2
     menuMax = menuMin + 10
@@ -187,31 +200,42 @@ end
 --[[ I use command to move navigate the menu, because I want to take advantage of RegisterKeyMapping()]]--
 -- If any user wants to individually type every command to navigate the menu...good luck...
 RegisterCommand('critmenumovemenuitemdown', function()
-    if buttonID >= #menu[menuShown].buttons then
-        buttonID = 2
-        menuMin = 2
-        menuMax = 12
-    else
-        buttonID = buttonID + 1
+    if renderMenu then
+        if menu[menuShown].isTOS ~= nil and menu[menuShown].isTOS == false then
+            if buttonID >= #menu[menuShown].buttons then
+                buttonID = 2
+                menuMin = 2
+                menuMax = 12
+            else
+                buttonID = buttonID + 1
+            end
+            PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+            scaleformId = generateMenu(menuShown, buttonID)
+        end
     end
-    PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET")
-    scaleformId = generateMenu(menuShown, buttonID)
 end)
 
 RegisterCommand('critmenumovemenuitemup', function()
-    if buttonID <= 2 then
-        buttonID = #menu[menuShown].buttons
-        menuMax = #menu[menuShown].buttons
-        menuMin = menuMax - 10
-    else
-        buttonID = buttonID - 1
+    if renderMenu then
+        if menu[menuShown].isTOS ~= nil and menu[menuShown].isTOS == false then
+            if buttonID <= 2 then
+                buttonID = #menu[menuShown].buttons
+                menuMax = #menu[menuShown].buttons
+                menuMin = menuMax - 10
+            else
+                buttonID = buttonID - 1
+            end
+            PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+            scaleformId = generateMenu(menuShown, buttonID)
+        end
     end
-    PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET")
-    scaleformId = generateMenu(menuShown, buttonID)
 end)
 
 RegisterCommand('critmenuclosemenu', function()
     if renderMenu then
+        if menu[menuShown].isTOS == true then
+            TriggerEvent('critMenu.Check.TosDenied', menuShown)
+        end
         TriggerEvent('critMenu.HideMenu')
         PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
     end
@@ -219,14 +243,18 @@ end)
 
 RegisterCommand('critmenutriggeritem', function()
     if renderMenu then
-        PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
-        TriggerEvent('critMenu.Check.ButtonWasUsed', menuShown, buttonID)
-        if menu[menuShown].buttons[buttonID].isMenu == true then
-            local newMenu = menu[menuShown].buttons[buttonID].event
-            TriggerEvent('critMenu.HideMenu')
-            TriggerEvent('critMenu.ShowMenu', newMenu)
+        if menu[menuShown].isTOS == true then
+            TriggerEvent('critMenu.Check.TosAccepted', menuShown)
         else
-            TriggerEvent(menu[menuShown].buttons[buttonID].event, menuShown, menu[menuShown].buttons[buttonID].id)
+            PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+            TriggerEvent('critMenu.Check.ButtonWasUsed', menuShown, buttonID)
+            if menu[menuShown].buttons[buttonID].isMenu == true then
+                local newMenu = menu[menuShown].buttons[buttonID].event
+                TriggerEvent('critMenu.HideMenu')
+                TriggerEvent('critMenu.ShowMenu', newMenu)
+            else
+                TriggerEvent(menu[menuShown].buttons[buttonID].event, menuShown, menu[menuShown].buttons[buttonID].id)
+            end
         end
     end
 end)
