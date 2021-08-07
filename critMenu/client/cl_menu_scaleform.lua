@@ -50,6 +50,8 @@ function generateInstruction(_menuID) --from Vespura's no-clip script.
         Citizen.Wait(1)
     end
 
+    DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 0, 0)
+
     PushScaleformMovieFunction(scaleform, "CLEAR_ALL")
     PopScaleformMovieFunctionVoid()
     
