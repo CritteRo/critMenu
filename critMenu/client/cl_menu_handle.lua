@@ -16,6 +16,12 @@ AddEventHandler('critMenu.CreateMenu', function(_menuID, _menuTitle, _menuDesc, 
     }
 end)
 
+AddEventHandler('critMenu.UpdateOpenMenu', function()
+    if renderMenu then
+        generateMenu(menuShown, buttonID)
+    end
+end)
+
 AddEventHandler('critMenu.CreateSubMenu', function(_menuID, _parentID, _menuTitle, _menuDesc, _selectText, _upText, _downText, _quitText)
     menu[_menuID] = {
         title = _menuTitle,
