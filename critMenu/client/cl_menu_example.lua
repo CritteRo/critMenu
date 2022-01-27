@@ -1,4 +1,4 @@
-
+--[[
 TriggerEvent('critMenu.CreateMenu', "test1", "_menuTitle", "_menuDesc", "_selectText", "_upText", "_downText", "_quitText")
 
 TriggerEvent('critMenu.AddButton', "test1", "test1button", "_buttonText1", "_buttonRightText", "_strike", "_buttonDescription", "test.event")
@@ -18,3 +18,5 @@ AddEventHandler('test.event', function(_menu, _button)
     TriggerEvent('critMenu.HideMenu')
     print('button ['.._button..'] from menu ['.._menu..'] triggered this event')
 end)
+
+]]
